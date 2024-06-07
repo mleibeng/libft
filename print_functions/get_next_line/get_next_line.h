@@ -6,7 +6,7 @@
 /*   By: mleibeng <mleibeng@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:36:01 by mleibeng          #+#    #+#             */
-/*   Updated: 2024/03/25 23:15:46 by mleibeng         ###   ########.fr       */
+/*   Updated: 2024/06/07 06:25:44 by mleibeng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../../libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 1024
 # endif
 
 typedef struct s_stash_data
@@ -26,5 +26,6 @@ typedef struct s_stash_data
 }			t_stash_data;
 
 char		*get_next_line(int fd);
+char		*get_cut_next_line(int fd);
 
 #endif

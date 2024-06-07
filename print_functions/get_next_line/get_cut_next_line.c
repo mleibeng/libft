@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_cut_next_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleibeng <mleibeng@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:35:49 by mleibeng          #+#    #+#             */
-/*   Updated: 2024/06/07 06:30:17 by mleibeng         ###   ########.fr       */
+/*   Created: 2024/06/07 06:24:27 by mleibeng          #+#    #+#             */
+/*   Updated: 2024/06/07 06:27:33 by mleibeng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	parse_string(t_stash_data *stash)
+size_t	cut_parse_string(t_stash_data *stash)
 {
 	size_t	i;
 
@@ -20,11 +20,14 @@ size_t	parse_string(t_stash_data *stash)
 	while (stash->content[i] != '\n' && stash->content[i])
 		i++;
 	if (stash->content[i] == '\n')
+	{
+		stash->content[i] = '\0';
 		i++;
+	}
 	return (i);
 }
 
-void	*free_stash(t_stash_data *stash)
+void	*free_cut_stash(t_stash_data *stash)
 {
 	free(stash->content);
 	stash->content = NULL;
@@ -32,7 +35,7 @@ void	*free_stash(t_stash_data *stash)
 	return (NULL);
 }
 
-int	readout(int fd, t_stash_data *stash)
+int	cut_readout(int fd, t_stash_data *stash)
 {
 	int		nbyte;
 	char	buf[BUFFER_SIZE + 1];
@@ -58,7 +61,7 @@ int	readout(int fd, t_stash_data *stash)
 	return (1);
 }
 
-char	*new_line_gen(t_stash_data *stash, size_t i)
+char	*new_cut_line_gen(t_stash_data *stash, size_t i)
 {
 	char	*new_line;
 	char	*tmp;
@@ -81,7 +84,7 @@ char	*new_line_gen(t_stash_data *stash, size_t i)
 	return (new_line);
 }
 
-char	*get_next_line(int fd)
+char	*get_cut_next_line(int fd)
 {
 	char				*new_line;
 	static t_stash_data	stash[10240];
@@ -90,13 +93,13 @@ char	*get_next_line(int fd)
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!readout(fd, &stash[fd]))
-		return (free_stash(&stash[fd]));
+	if (!cut_readout(fd, &stash[fd]))
+		return (free_cut_stash(&stash[fd]));
 	if (stash[fd].eof && stash[fd].content[0] == '\0')
-		return (free_stash(&stash[fd]));
-	i = parse_string(&stash[fd]);
-	new_line = new_line_gen(&stash[fd], i);
+		return (free_cut_stash(&stash[fd]));
+	i = cut_parse_string(&stash[fd]);
+	new_line = new_cut_line_gen(&stash[fd], i);
 	if (new_line == NULL)
-		return (free_stash(&stash[fd]));
+		return (free_cut_stash(&stash[fd]));
 	return (new_line);
 }
