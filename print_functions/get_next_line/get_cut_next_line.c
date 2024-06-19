@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cut_next_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleibeng <mleibeng@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvinleibenguth <marvinleibenguth@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 06:24:27 by mleibeng          #+#    #+#             */
-/*   Updated: 2024/06/07 06:27:33 by mleibeng         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:36:51 by marvinleibe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ size_t	cut_parse_string(t_stash_data *stash)
 
 void	*free_cut_stash(t_stash_data *stash)
 {
-	free(stash->content);
-	stash->content = NULL;
+	if(stash->content)
+	{
+		free(stash->content);
+		stash->content = NULL;
+	}
 	stash->eof = 0;
 	return (NULL);
 }
